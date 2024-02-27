@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
-    final _screenHeight = MediaQuery.of(context).size.height;
-    final _screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     List<Widget> cItems = [
       Container(
@@ -38,144 +38,147 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     ];
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          margin: EdgeInsets.symmetric(horizontal: _screenWidth * 0.040),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: _screenWidth * 0.005, vertical: _screenHeight * 0.020),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('Welcome\${home}', style: TextStyle(color: Colors.black, fontSize: 25.0)),
-                      CircleAvatar(
-                        radius: 30.0,
-                        backgroundColor: Colors.blue,
-                      ),
-                    ],
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.005,
+                  vertical: screenHeight * 0.020),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Welcome\${home}',
+                      style: TextStyle(color: Colors.black, fontSize: 25.0)),
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Colors.blue,
                   ),
-                ),
-                _buildTextField(),
-                SizedBox(
-                  height: _screenHeight * 0.018,
-                ),
-                _buildCarouselSlider(cItems),
-                SizedBox(
-                  height: _screenHeight * 0.015,
-                ),
-                _buildCard(),
-                SizedBox(
-                  height: _screenHeight * 0.015,
-                ),
-                _buildColumn(),
-                SizedBox(
-                  height: _screenHeight * 0.015,
-                ),
-                _buildAllItems(),
-                SizedBox(
-                  height: _screenHeight * 0.015,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            _buildTextField(),
+            SizedBox(
+              height: screenHeight * 0.018,
+            ),
+            _buildCarouselSlider(cItems),
+            SizedBox(
+              height: screenHeight * 0.015,
+            ),
+            _buildCard(screenHeight, screenWidth),
+            SizedBox(
+              height: screenHeight * 0.018,
+            ),
+            _buildColumn(screenHeight, screenWidth),
+            SizedBox(
+              height: screenHeight * 0.018,
+            ),
+            _buildAllItems(screenHeight, screenWidth),
+            SizedBox(
+              height: screenHeight * 0.015,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Column _buildAllItems() {
+  Column _buildAllItems(double height, double width) {
     return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "All Items",
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                  Text(
-                    "See all",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 120,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 3),
-                      width: 200,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Colors.blue,
-                              Colors.green,
-                            ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomRight,
-                          )),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "All Items",
+              style: TextStyle(fontSize: 20.0),
+            ),
+            Text(
+              "See all",
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: height * 0.004,
+        ),
+        SizedBox(
+          height: height * 0.150,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(right: width * 0.012),
+                width: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Colors.blue,
+                        Colors.green,
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomRight,
+                    )),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
-  Column _buildColumn() {
+  Column _buildColumn(double height, double width) {
     return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Browse Categories",
-                style: TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 100,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 2.5),
-                      width: 120,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Colors.blue,
-                              Colors.green,
-                            ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomRight,
-                          )),
-                    );
-                  },
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Browse Categories",
+          style: TextStyle(fontSize: 20.0),
+        ),
+        SizedBox(
+          height: height * 0.002,
+        ),
+        SizedBox(
+          height: height * 0.138,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: CategoriesModel.categoriesList.length,
+            itemBuilder: (context, index) {
+              final category = CategoriesModel.categoriesList[index];
+
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-              ),
-            ],
-          );
+                margin: EdgeInsets.only(top: 4.0, bottom: 4.0, right: width * 0.016),
+                elevation: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    category.categoryImage,
+                    fit: BoxFit.fill,
+                    width: width * 0.320,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
-  Card _buildCard() {
+  Card _buildCard(double height, double width) {
     return Card(
       color: Colors.grey.shade100,
       elevation: 2.0,
@@ -183,25 +186,24 @@ class HomeScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(14.0),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: EdgeInsets.symmetric(horizontal: width * 0.030),
         width: double.infinity,
-        height: 60,
+        height: height * 0.070,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.0),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Want to rent something?'),
+            const Text('Want to rent something?'),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.darkLightBlue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14.0),
-                )
-              ),
+                  backgroundColor: AppColors.darkLightBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  )),
               onPressed: () {},
-              child: Text("Add Post"),
+              child: const Text("Add Post"),
             )
           ],
         ),
@@ -230,17 +232,10 @@ class HomeScreen extends StatelessWidget {
       options: CarouselOptions(
         viewportFraction: 1,
         height: 150,
-        // Customize the height of the carousel
         autoPlay: true,
-        // Enable auto-play
         enlargeCenterPage: true,
-        // Increase the size of the center item
         enableInfiniteScroll: true,
-        // Enable infinite scroll
-        onPageChanged: (index, reason) {
-          // Optional callback when the page changes
-          // You can use it to update any additional UI components
-        },
+        onPageChanged: (index, reason) {},
       ),
     );
   }

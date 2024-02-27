@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 18.0),
         backgroundColor: AppColors.darkBlue,
         foregroundColor: Colors.white,
-        fixedSize: Size(screenWidth * 0.999, screenHeight * 0.090),
+        fixedSize: Size(screenWidth * 0.999, screenHeight * 0.080),
       ),
       child: Text(btnText),
     );

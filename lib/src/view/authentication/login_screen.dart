@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Password",
         prefixIcon: const Icon(Icons.key),
         suffixIcon: IconButton(
@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Email Address",
         prefixIcon: const Icon(Icons.email),
       ),

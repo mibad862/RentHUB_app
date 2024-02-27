@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     _confirmPassTextField(screenHeight),
                     SizedBox(
-                      height: screenHeight * 0.016,
+                      height: screenHeight * 0.018,
                     ),
                     CustomButton(
                       btnText: "Create account",
@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Confirm Password",
         prefixIcon: const Icon(Icons.key),
         suffixIcon: IconButton(
@@ -149,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Full Name",
         prefixIcon: const Icon(Icons.person),
       ),
@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Password",
         prefixIcon: const Icon(Icons.key),
         suffixIcon: IconButton(
@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.034),
+        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
         hintText: "Email Address",
         prefixIcon: const Icon(Icons.email),
       ),
