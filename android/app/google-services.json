@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "445160804502",
+    "project_id": "renthub-e9302",
+    "storage_bucket": "renthub-e9302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445160804502:android:af33e9f13e866eafb532b7",
+        "android_client_info": {
+          "package_name": "com.example.rental_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByaorUDPAXo1mkZXzkR__sfYN2xw3WerQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

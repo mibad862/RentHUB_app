@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
-import '../../../widgets/custom_button.dart';
+import '../../widgets/custom_button.dart';
 import '../../utils/colors.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -14,7 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+  static TextEditingController nameController = TextEditingController();
   bool isPassVisible = false;
   bool isConfirmPassVisible = false;
   bool isSubmit = false;
@@ -27,26 +30,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
     _formKey.currentState!.save();
+    try {
+      final userCredentials = _firebase.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passController.text,
+      );
+      if (_firebase.currentUser != null) {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {}
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(error.email ?? 'Authentication failed.'),
+      ));
+    }
   }
 
-  // void login() async {
-  //   try {
-  //     loader = true;
-  //     setState(() {});
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: emailController.text, password: passController.text);
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: ((context) => HomeView())));
-  //   } on FirebaseAuthException catch (e) {
-  //     loader = false;
-  //     setState(() {});
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:rental_app/src/utils/colors.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -51,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('Welcome\nMuhammad Ebad', style: TextStyle(color: Colors.black, fontSize: 25.0)),
+                      Text('Welcome\${home}', style: TextStyle(color: Colors.black, fontSize: 25.0)),
                       CircleAvatar(
                         radius: 30.0,
                         backgroundColor: Colors.blue,

@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
-import '../../../widgets/custom_button.dart';
+import '../../widgets/custom_button.dart';
 import '../../utils/colors.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,34 +20,28 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isSubmit = false;
   final _formKey = GlobalKey<FormState>();
 
-
   void _submit() {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
     _formKey.currentState!.save();
-    Navigator.pushNamed(context, '/login');
+    try {
+      final userCredentials = _firebase.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passController.text,
+      );
+      if (_firebase.currentUser != null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {}
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(error.email ?? 'Authentication failed.'),
+      ));
+    }
   }
-
-  // void login() async {
-  //   try {
-  //     loader = true;
-  //     setState(() {});
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: emailController.text, password: passController.text);
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: ((context) => HomeView())));
-  //   } on FirebaseAuthException catch (e) {
-  //     loader = false;
-  //     setState(() {});
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _emailTextField(double screenHeight) {
     return TextFormField(
+      autocorrect: false,
+      keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.none,
       validator: FieldValidator.validateEmail,
       controller: emailController,
       decoration: InputDecoration(
@@ -178,11 +178,5 @@ class _LoginScreenState extends State<LoginScreen> {
         prefixIcon: const Icon(Icons.email),
       ),
     );
-  }
-
-  void login() {
-    setState(() {
-      isSubmit = !isSubmit;
-    });
   }
 }
