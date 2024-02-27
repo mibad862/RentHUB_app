@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
-
 import '../../../widgets/custom_button.dart';
 import '../../utils/colors.dart';
 
