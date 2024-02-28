@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
@@ -70,11 +69,11 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.015,
             ),
-            _buildCard(screenHeight, screenWidth),
+            _buildCard(screenHeight, screenWidth, context),
             SizedBox(
               height: screenHeight * 0.018,
             ),
-            _buildColumn(screenHeight, screenWidth),
+            _categoriesColumn(screenHeight, screenWidth),
             SizedBox(
               height: screenHeight * 0.018,
             ),
@@ -136,7 +135,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Column _buildColumn(double height, double width) {
+  Column _categoriesColumn(double height, double width) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -148,26 +147,34 @@ class HomeScreen extends StatelessWidget {
           height: height * 0.002,
         ),
         SizedBox(
-          height: height * 0.138,
+          height: height * 0.140,
           width: double.infinity,
           child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 2),
             scrollDirection: Axis.horizontal,
             itemCount: CategoriesModel.categoriesList.length,
             itemBuilder: (context, index) {
               final category = CategoriesModel.categoriesList[index];
 
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                margin: EdgeInsets.only(top: 4.0, bottom: 4.0, right: width * 0.016),
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    category.categoryImage,
-                    fit: BoxFit.fill,
-                    width: width * 0.320,
+              return SizedBox(
+                width: width * 0.340,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  // margin: EdgeInsets.only(top: 4.0, bottom: 4.0, right: width * 0.016),
+                  elevation: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        width: width * 0.15,
+                        category.categoryImage,
+                        // fit: BoxFit.cover,
+                      ),
+                      Text(category.categoryName, textAlign: TextAlign.center),
+                    ],
                   ),
                 ),
               );
@@ -178,7 +185,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Card _buildCard(double height, double width) {
+  Card _buildCard(double height, double width, BuildContext context) {
     return Card(
       color: Colors.grey.shade100,
       elevation: 2.0,
@@ -188,7 +195,7 @@ class HomeScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: width * 0.030),
         width: double.infinity,
-        height: height * 0.070,
+        height: height * 0.072,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.0),
         ),
@@ -202,7 +209,7 @@ class HomeScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   )),
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/addpost'),
               child: const Text("Add Post"),
             )
           ],

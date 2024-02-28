@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/utils/colors.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CommonButton extends StatelessWidget {
+  const CommonButton({
     super.key,
     required this.btnText,
     required this.btnFunction,

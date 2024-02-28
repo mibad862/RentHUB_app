@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/common_button.dart';
 import '../../utils/colors.dart';
 
 final _firebase = FirebaseAuth.instance;
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    CustomButton(
+                    CommonButton(
                       btnText: "Login",
                       btnFunction: _submit,
                     ),

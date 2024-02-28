@@ -14,12 +14,13 @@ class CommonBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      selectedLabelStyle: const TextStyle(fontSize: 15.0),
+      unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+      selectedFontSize:  16.0,
+      unselectedFontSize: 15.0,
       iconSize: 30.0,
-      elevation: 5,
-      backgroundColor: AppColors.darkBlue, // <-- This works for fixed
-      selectedItemColor: AppColors.lightBlue,
-      unselectedItemColor: AppColors.color5,
+      elevation: 8,
+      backgroundColor: AppColors.darkLightBlue, // <-- This works for fixed
+      selectedItemColor: AppColors.color5,
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
