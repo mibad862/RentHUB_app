@@ -22,17 +22,41 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
-    const assetPath = 'assets/images/logo.png';
+    final screenHeight = MediaQuery.of(context).size.height;
+    const appLogoPath = 'assets/images/logo.png';
+    const banoQabilLogoPath = 'assets/images/bano_qabil_logo.png';
 
     return Scaffold(
       backgroundColor: AppColors.darkBlue,
       body: Center(
-        child: Image.asset(
-          assetPath,
-          fit: BoxFit.fill,
-          width: screenWidth * 0.6,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Image.asset(
+              appLogoPath,
+              fit: BoxFit.fill,
+              width: screenWidth * 0.560,
+            ),
+            SizedBox(height: screenHeight * 0.240),
+            const Text(
+              'from',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: screenHeight * 0.005),
+            Image.asset(
+              banoQabilLogoPath,
+              fit: BoxFit.fill,
+              width: screenWidth * 0.220,
+            ),
+            SizedBox(height: screenHeight * 0.040),
+          ],
         ),
       ),
     );

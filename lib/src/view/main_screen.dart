@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/home_screen.dart';
+import 'package:rental_app/src/view/profile_screen.dart';
 import '../widgets/common_navbar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     const HomeScreen(),
     const Text('Hello'),
-    const Text('Developers')
+    const ProfileScreen(),
   ];
 
   void onItemTapped(int index) {

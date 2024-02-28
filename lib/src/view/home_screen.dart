@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  bool isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         height: 140,
         decoration: BoxDecoration(
           color: AppColors.lightBlue,
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(18.0),
         ),
       ),
       Container(
@@ -25,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         height: 140,
         decoration: BoxDecoration(
           color: const Color.fromARGB(240, 4, 143, 156),
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(18.0),
         ),
       ),
       Container(
@@ -33,7 +41,7 @@ class HomeScreen extends StatelessWidget {
         height: 140,
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 139, 96, 110),
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(18.0),
         ),
       ),
     ];
@@ -61,7 +69,8 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _buildTextField(),
+            // _buildTextField(),
+            _searchField(isTapped),
             SizedBox(
               height: screenHeight * 0.018,
             ),
@@ -105,7 +114,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: height * 0.004,
+          height: height * 0.005,
         ),
         SizedBox(
           height: height * 0.150,
@@ -147,7 +156,7 @@ class HomeScreen extends StatelessWidget {
           height: height * 0.002,
         ),
         SizedBox(
-          height: height * 0.140,
+          height: height * 0.150,
           width: double.infinity,
           child: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 2),
@@ -173,7 +182,11 @@ class HomeScreen extends StatelessWidget {
                         category.categoryImage,
                         // fit: BoxFit.cover,
                       ),
-                      Text(category.categoryName, textAlign: TextAlign.center),
+                      Text(
+                        category.categoryName,
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1.1,
+                      ),
                     ],
                   ),
                 ),
@@ -218,18 +231,45 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  TextField _buildTextField() {
-    return TextField(
-      decoration: InputDecoration(
-          hintText: "Search any item..",
-          hintStyle: const TextStyle(fontSize: 18.0),
-          prefixIcon: const Icon(
-            Icons.search,
-            size: 26,
+  Widget _searchField(bool isTapped){
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, '/search-item'),
+      onLongPress: (){
+        setState(() {
+          isTapped = !isTapped;
+        });
+      },
+
+      child: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          border: Border.all(
+            color: isTapped ? Colors.blue : Colors.grey,
+            width: 2.0,
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14.0),
-          )),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          children: [
+            Icon(
+              Icons.search_sharp,
+              size: 28,
+            ),
+            SizedBox(width: 15.0),
+            Expanded(
+              child: Text(
+                "What are you looking for?",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.grey, // Hint text color
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -237,8 +277,8 @@ class HomeScreen extends StatelessWidget {
     return CarouselSlider(
       items: cItems,
       options: CarouselOptions(
-        viewportFraction: 1,
-        height: 150,
+        viewportFraction: 0.98,
+        height: 160,
         autoPlay: true,
         enlargeCenterPage: true,
         enableInfiniteScroll: true,

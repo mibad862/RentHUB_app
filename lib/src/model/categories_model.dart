@@ -12,7 +12,7 @@ class CategoriesModel {
     CategoriesModel(categoryName: "Electronics", categoryImage: 'assets/images/categories_images/electronic.png'),
     CategoriesModel(categoryName: "Real Estate", categoryImage: 'assets/images/categories_images/real_estate.png'),
     CategoriesModel(categoryName: "Furniture", categoryImage: 'assets/images/categories_images/furniture.png'),
-    CategoriesModel(categoryName: "Tools and Equipments", categoryImage: 'assets/images/categories_images/tools_equipments.png'),
+    CategoriesModel(categoryName: "Equipments", categoryImage: 'assets/images/categories_images/tools_equipments.png'),
   ];
 
 }

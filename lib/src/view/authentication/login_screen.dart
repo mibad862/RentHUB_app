@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
+import 'package:rental_app/src/widgets/common_bottom_headline.dart';
+import 'package:rental_app/src/widgets/common_pass_textfield.dart';
 import '../../widgets/common_button.dart';
 import '../../utils/colors.dart';
+import '../../widgets/common_email_textfield.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -43,6 +46,13 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // @override
+  // void dispose() {
+  //   emailController.dispose();
+  //   passController.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -74,11 +84,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: screenHeight * 0.050,
                     ),
-                    _emailTextField(screenHeight),
-                    SizedBox(
-                      height: screenHeight * 0.013,
+                    CommonEmailTextField(
+                      emailController: emailController,
+                      screenHeight: screenHeight,
                     ),
-                    _passTextField(screenHeight),
+                    SizedBox(
+                      height: screenHeight * 0.008,
+                    ),
+                    CommonPassTextField(
+                      screenHeight: screenHeight,
+                      passController: passController,
+                      validator: FieldValidator.validatePassword,
+                    ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: TextButton(
@@ -94,9 +111,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       btnFunction: _submit,
                     ),
                     SizedBox(
-                      height: screenHeight * 0.200,
+                      height: screenHeight * 0.210,
                     ),
-                    _buildGestureDetector(context),
+                    const CommonBottomHeadline(
+                      navigationPath: '/signup',
+                      text1: "Don't have an account?",
+                      text2: "Sign Up",
+                    ),
                   ]),
             ),
           ),
@@ -105,78 +126,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildGestureDetector(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushReplacementNamed(context, '/signup');
-        },
-        child: RichText(
-          text: const TextSpan(children: [
-            TextSpan(
-                text: "Don't have an account?\t",
-                style: TextStyle(
-                  color: AppColors.color4,
-                  fontSize: 17.0,
-                )),
-            TextSpan(
-              text: "Sign Up",
-              style: TextStyle(
-                color: AppColors.darkBlue,
-                fontSize: 17.0,
-              ),
-            ),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Widget _passTextField(double screenHeight) {
-    return TextFormField(
-      validator: FieldValidator.validatePassword,
-      obscureText: !isVisible,
-      controller: passController,
-      decoration: InputDecoration(
-        prefixIconColor: AppColors.darkLightBlue,
-        suffixIconColor: AppColors.darkLightBlue,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
-        hintText: "Password",
-        prefixIcon: const Icon(Icons.key),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              isVisible = !isVisible;
-            });
-          },
-          icon: isVisible
-              ? const Icon(Icons.visibility)
-              : const Icon(Icons.visibility_off),
-        ),
-      ),
-    );
-  }
-
-  Widget _emailTextField(double screenHeight) {
-    return TextFormField(
-      autocorrect: false,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: TextCapitalization.none,
-      validator: FieldValidator.validateEmail,
-      controller: emailController,
-      decoration: InputDecoration(
-        prefixIconColor: AppColors.darkLightBlue,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: screenHeight * 0.030),
-        hintText: "Email Address",
-        prefixIcon: const Icon(Icons.email),
-      ),
-    );
-  }
 }
