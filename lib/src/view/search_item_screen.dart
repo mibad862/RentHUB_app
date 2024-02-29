@@ -34,8 +34,9 @@ class SearchItemScreenState extends State<SearchItemScreen> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
+          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _topRow(context),
               _searchField(),

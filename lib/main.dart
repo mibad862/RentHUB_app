@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rental_app/src/newwidget.dart';
+import 'package:rental_app/src/view/search_item_screen.dart';
 import 'package:rental_app/src/view/add_post_screen.dart';
 import 'package:rental_app/src/view/authentication/login_screen.dart';
 import 'package:rental_app/src/view/authentication/signup_screen.dart';

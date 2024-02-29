@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
+import 'package:rental_app/src/utils/textstyles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -100,14 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "All Items",
-              style: TextStyle(fontSize: 20.0),
+              style: style4
             ),
-            Text(
+            const Text(
               "See all",
               style: TextStyle(fontSize: 16.0),
             ),
@@ -148,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Browse Categories",
-          style: TextStyle(fontSize: 20.0),
+          style: style4,
         ),
         SizedBox(
           height: height * 0.002,
@@ -159,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: height * 0.150,
           width: double.infinity,
           child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 2),
             scrollDirection: Axis.horizontal,
             itemCount: CategoriesModel.categoriesList.length,
             itemBuilder: (context, index) {
