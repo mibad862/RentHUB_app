@@ -38,72 +38,81 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildExpanded() {
     return Expanded(
-            child: ListView.builder(
-                itemCount: ProfileModel.profileItemList.length,
-                itemBuilder: (context, index) {
-                  final profile = ProfileModel.profileItemList[index];
-                  return Column(
-                    children: [
-                      ListTile(
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -1),
-                        contentPadding: EdgeInsets.zero,
-                        horizontalTitleGap: 3.0,
-                        leading: Icon(
-                          profile.itemIconData,
-                          size: 30.0,
-                        ),
-                        title: Text(
-                          profile.itemName,
-                          style: style1,
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                      ),
-                    ],
-                  );
-                }),
-          );
+      child: ListView.builder(
+          itemCount: ProfileModel.profileItemList.length,
+          itemBuilder: (context, index) {
+            final profile = ProfileModel.profileItemList[index];
+            return Column(
+              children: [
+                ListTile(
+                  onTap: (){},
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -1),
+                  contentPadding: EdgeInsets.zero,
+                  horizontalTitleGap: 3.0,
+                  leading: Icon(
+                    profile.itemIconData,
+                    size: 30.0,
+                    color: AppColors.darkLightBlue,
+                  ),
+                  title: Text(
+                    profile.itemName,
+                    style: style1,
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.darkLightBlue,
+                  ),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+              ],
+            );
+          }),
+    );
   }
 
   Widget _buildAlign(double screenHeight, TextStyle style2) {
     return Align(
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    const CircleAvatar(
-                      radius: 55,
+      alignment: Alignment.bottomCenter,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              const CircleAvatar(
+                radius: 55,
+              ),
+              Positioned(
+                bottom: 0.0,
+                right: 5.0,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 26,
+                    height: 26,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
                     ),
-                    Positioned(
-                      bottom: 0.0,
-                      right: 5.0,
-                      child: GestureDetector(
-                        onTap: (){},
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 26,
-                          height: 26,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.black,
-                          ),
-                          child: const Icon(Icons.edit, color: Colors.white, size: 18,),
-                        ),
-                      ),
+                    child: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 18,
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: screenHeight * 0.020),
-                Text(
-                  'Muhammad Ebad Ur Rehman',
-                  style: style2,
-                ),
-              ],
-            ),
-          );
+              ),
+            ],
+          ),
+          SizedBox(height: screenHeight * 0.020),
+          Text(
+            'Muhammad Ebad Ur Rehman',
+            style: style2,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -27,37 +27,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  void _submit() {
+  void _submit() async {
+    setState(() {
+      isSubmit = true; // Set to true to show loading indicator
+    });
+
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
+      setState(() {
+        isSubmit = false; // Reset to false if validation fails
+      });
       return;
     }
     _formKey.currentState!.save();
+
     try {
-      final userCredentials = _firebase.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _firebase.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passController.text,
       );
-      if (_firebase.currentUser != null) {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
+
+      // You can access the user information through userCredential.user
+      print("Account created: ${userCredential.user!.email}");
+
+      // Navigate to the login screen upon successful account creation
+      Navigator.pushReplacementNamed(context, '/login');
     } on FirebaseAuthException catch (error) {
-      if (error.code == 'email-already-in-use') {}
+      String errorMessage = error.code.toString();
+
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error.email ?? 'Authentication failed.'),
+        content: Text(errorMessage),
       ));
+    } finally {
+      setState(() {
+        isSubmit = false; // Reset to false after authentication attempt
+      });
     }
   }
-
-  @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   passController.dispose();
-  //   confirmPassController.dispose();
-  //   nameController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const Text(
                       'Create your new account',
                       style:
-                          TextStyle(fontSize: 20.0, color: AppColors.darkBlue),
+                      TextStyle(fontSize: 20.0, color: AppColors.darkBlue),
                     ),
                     SizedBox(
                       height: screenHeight * 0.050,
@@ -121,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: screenHeight * 0.018,
                     ),
                     CommonButton(
-                      btnText: "Create account",
+                      btnText: isSubmit ? "Creating..." : "Create account",
                       btnFunction: _submit,
                     ),
                     SizedBox(
@@ -154,11 +161,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         prefixIcon: const Icon(Icons.person),
       ),
     );
-  }
-
-  void login() {
-    setState(() {
-      isSubmit = !isSubmit;
-    });
   }
 }
