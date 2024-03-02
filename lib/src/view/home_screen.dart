@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rental_app/src/model/all_items_model.dart';
 import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
 import 'package:rental_app/src/utils/textstyles.dart';
@@ -110,25 +111,73 @@ class _HomeScreenState extends State<HomeScreen> {
           height: height * 0.005,
         ),
         SizedBox(
-          height: height * 0.150,
+          height: height * 0.250,
           width: double.infinity,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: AllItemsModel.allItemsList.length,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(right: width * 0.012),
-                width: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Colors.blue,
-                        Colors.green,
+
+              final allItem = AllItemsModel.allItemsList[index];
+
+              return Stack(
+                children: [
+                  Card(
+                    elevation: 3.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Container(
+                      // margin: EdgeInsets.only(right: width * 0.012),
+                      width: 320,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10.0,
+                    left: 10.0,
+                    bottom: 10.0,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        allItem.itemImagePath,
+                        width: 140,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10.0,
+                    bottom: 10.0,
+                    right: 10.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(allItem.itemName, style: style2),
+                        Text(allItem.itemRent, style: style6),
                       ],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomRight,
-                    )),
+                    ),
+                  ),
+                  Positioned(
+                    right: 10.0,
+                    bottom: 8.0,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.darkLightBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: (){},
+                      child: Text('Book Now'),
+                    ),
+                  ),
+                ],
               );
             },
           ),

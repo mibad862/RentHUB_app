@@ -54,8 +54,8 @@ class CommonCarouselDesign extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 5.0,
-          left: 5.0,
+          top: 7.0,
+          left: 7.0,
           child: Image.asset(
             imagePath,
             width: 190,
