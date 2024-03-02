@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_app/src/utils/textstyles.dart';
 
 class SearchItemScreen extends StatefulWidget {
   const SearchItemScreen({super.key});
@@ -33,12 +34,19 @@ class SearchItemScreenState extends State<SearchItemScreen> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: Text(
+            'Quick Filters',
+            style: style7,
+          ),
+        ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _topRow(context),
               _searchField(),
               _itemsList(filteredCategories),
             ],
@@ -93,20 +101,20 @@ class SearchItemScreenState extends State<SearchItemScreen> {
     );
   }
 
-  Row _topRow(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.arrow_back_ios_sharp)),
-        SizedBox(
-          width: 8,
-        ),
-        Text(
-          'Quick Filters',
-          style: TextStyle(fontSize: 24.0),
-        ),
-      ],
-    );
-  }
+  // Row _topRow(BuildContext context) {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           icon: Icon(Icons.arrow_back_ios_sharp)),
+  //       SizedBox(
+  //         width: 8,
+  //       ),
+  //       Text(
+  //         'Quick Filters',
+  //         style: TextStyle(fontSize: 24.0),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

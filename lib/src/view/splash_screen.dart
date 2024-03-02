@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset(
               banoQabilLogoPath,
               fit: BoxFit.fill,
-              width: screenWidth * 0.220,
+              width: screenWidth * 0.230,
             ),
             SizedBox(height: screenHeight * 0.040),
           ],

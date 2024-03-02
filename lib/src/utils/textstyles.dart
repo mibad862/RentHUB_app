@@ -23,3 +23,21 @@ final TextStyle style4 = GoogleFonts.openSans(
   fontWeight: FontWeight.w400,
   color: Colors.black,
 );
+
+final TextStyle style5 = GoogleFonts.openSans(
+  fontSize: 25,
+  fontWeight: FontWeight.w400,
+  color: Colors.black,
+);
+
+final TextStyle style6 = GoogleFonts.openSans(
+  fontSize: 15,
+  fontWeight: FontWeight.w400,
+  color: Colors.black,
+);
+
+final TextStyle style7 = GoogleFonts.openSans(
+  fontSize: 25,
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+);

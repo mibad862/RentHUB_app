@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/view/authentication/validator.dart';
 import 'package:rental_app/src/widgets/common_bottom_headline.dart';
@@ -26,8 +28,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isSubmit = false;
 
   final _formKey = GlobalKey<FormState>();
+  CollectionReference users = FirebaseFirestore.instance.collection('user');
 
-  void _submit() async {
+
+  Future<void> _submit() async {
     setState(() {
       isSubmit = true; // Set to true to show loading indicator
     });
@@ -42,16 +46,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _formKey.currentState!.save();
 
     try {
-      UserCredential userCredential = await _firebase.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+      await _firebase.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passController.text,
       );
 
-      // You can access the user information through userCredential.user
-      print("Account created: ${userCredential.user!.email}");
+      await users.doc(userCredential.user!.uid).set({
+        'full_name': nameController.text.toString(),
+        'number': emailController.text.toString(),
+      });
+
 
       // Navigate to the login screen upon successful account creation
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(
+        context,
+        '/login',
+      );
+
     } on FirebaseAuthException catch (error) {
       String errorMessage = error.code.toString();
 
@@ -59,12 +71,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(errorMessage),
       ));
+    } on FirebaseException catch (error) {
+
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Firestore error: ${error.message}"),
+      ));
     } finally {
       setState(() {
         isSubmit = false; // Reset to false after authentication attempt
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const Text(
                       'Create your new account',
                       style:
-                      TextStyle(fontSize: 20.0, color: AppColors.darkBlue),
+                          TextStyle(fontSize: 20.0, color: AppColors.darkBlue),
                     ),
                     SizedBox(
                       height: screenHeight * 0.050,
@@ -149,6 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _nameTextField(double screenHeight) {
     return TextFormField(
+      textCapitalization: TextCapitalization.words,
       validator: FieldValidator.validateFullname,
       controller: nameController,
       decoration: InputDecoration(

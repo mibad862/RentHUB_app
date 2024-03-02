@@ -40,6 +40,8 @@ dependencies:
   firebase_auth: ^4.16.0
   dot_navigation_bar: ^1.0.2
   google_fonts: ^6.1.0
+  firebase_storage: ^11.6.0
+  cloud_firestore: ^4.14.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/categories_images/
+    - assets/images/carousel_images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -13,10 +13,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   bool isVisible = false;
@@ -43,11 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
         password: passController.text,
       );
 
-      // You can access the user information through userCredential.user
-      print("Login successful: ${userCredential.user!.email}");
-
-      // Navigate to the home screen upon successful login
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(
+        context,
+        '/home',
+      );
     } on FirebaseAuthException catch (error) {
       // Handle different authentication errors
       String errorMessage = error.code.toString();

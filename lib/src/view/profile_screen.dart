@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/model/profile_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
+import 'package:rental_app/src/widgets/common_button.dart';
+import 'package:rental_app/src/widgets/common_streambuilder.dart';
 import '../utils/textstyles.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,6 +11,42 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showLogoutDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            title: const Text("Logout"),
+            content: const Text("Are you sure you want to logout?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(color: Color(0xFF0F52BA)),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0F52BA),
+                ),
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -19,7 +58,17 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: AppColors.color5,
         centerTitle: true,
-        title: Text('Profile', style: style2),
+        title: Text('Profile', style: style7),
+        actions: [
+          IconButton(
+            onPressed: showLogoutDialog,
+            icon: const Icon(
+              Icons.logout,
+              color: AppColors.appBackgroundColor,
+              size: 28.0,
+            ),
+          ),
+        ],
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.050),
@@ -30,6 +79,7 @@ class ProfileScreen extends StatelessWidget {
             _buildAlign(screenHeight, style2),
             SizedBox(height: screenHeight * 0.020),
             _buildExpanded(),
+            SizedBox(height: screenHeight * 0.010),
           ],
         ),
       ),
@@ -45,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
             return Column(
               children: [
                 ListTile(
-                  onTap: (){},
+                  onTap: () {},
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -1),
                   contentPadding: EdgeInsets.zero,
@@ -107,10 +157,7 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: screenHeight * 0.020),
-          Text(
-            'Muhammad Ebad Ur Rehman',
-            style: style2,
-          ),
+          const CommonStreamBuilder(),
         ],
       ),
     );

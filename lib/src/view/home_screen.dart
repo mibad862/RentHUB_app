@@ -1,18 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/src/model/categories_model.dart';
 import 'package:rental_app/src/utils/colors.dart';
 import 'package:rental_app/src/utils/textstyles.dart';
+import 'package:rental_app/src/widgets/common_streambuilder.dart';
+
+import '../model/carousel_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   bool isTapped = false;
 
   @override
@@ -20,32 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    List<Widget> cItems = [
-      Container(
-        width: double.infinity,
-        height: 140,
-        decoration: BoxDecoration(
-          color: AppColors.lightBlue,
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        height: 140,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(240, 4, 143, 156),
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        height: 140,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 139, 96, 110),
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      ),
-    ];
+    User? currentUser = FirebaseAuth.instance.currentUser;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
@@ -54,28 +34,40 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.005,
-                  vertical: screenHeight * 0.020),
+              padding: EdgeInsets.only(
+                left: screenWidth * 0.005,
+                right: screenWidth * 0.005,
+                bottom: screenHeight * 0.020,
+                top: screenHeight * 0.022,
+              ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Welcome\${home}',
-                      style: TextStyle(color: Colors.black, fontSize: 25.0)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Welcome,', style: TextStyle(fontSize: 24)),
+                      CommonStreamBuilder(),
+                    ],
+                  ),
                   CircleAvatar(
                     radius: 30.0,
                     backgroundColor: Colors.blue,
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 28.0,
+                    ),
                   ),
                 ],
               ),
             ),
-            // _buildTextField(),
-            _searchField(isTapped),
             SizedBox(
-              height: screenHeight * 0.018,
+              height: screenHeight * 0.002,
             ),
-            _buildCarouselSlider(cItems),
+            _buildCarouselSlider(),
             SizedBox(
               height: screenHeight * 0.015,
             ),
@@ -106,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               "All Items",
-              style: style4
+              style: style4,
             ),
             const Text(
               "See all",
@@ -172,7 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
-                  // margin: EdgeInsets.only(top: 4.0, bottom: 4.0, right: width * 0.016),
                   elevation: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,7 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       Image.asset(
                         width: width * 0.15,
                         category.categoryImage,
-                        // fit: BoxFit.cover,
                       ),
                       Text(
                         category.categoryName,
@@ -232,55 +222,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _searchField(bool isTapped){
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/search-item'),
-      onLongPress: (){
-        setState(() {
-          isTapped = !isTapped;
-        });
-      },
-
-      child: Container(
-        width: double.infinity,
-        height: 60,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          border: Border.all(
-            color: isTapped ? Colors.blue : Colors.grey,
-            width: 2.0,
-          ),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Row(
-          children: [
-            Icon(
-              Icons.search_sharp,
-              size: 28,
-            ),
-            SizedBox(width: 15.0),
-            Expanded(
-              child: Text(
-                "What are you looking for?",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.grey, // Hint text color
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  CarouselSlider _buildCarouselSlider(List<Widget> cItems) {
+  CarouselSlider _buildCarouselSlider() {
     return CarouselSlider(
       items: cItems,
       options: CarouselOptions(
         viewportFraction: 0.98,
-        height: 160,
-        autoPlay: true,
+        height: 180,
+        autoPlay: false,
         enlargeCenterPage: true,
         enableInfiniteScroll: true,
         onPageChanged: (index, reason) {},
